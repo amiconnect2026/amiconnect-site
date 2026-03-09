@@ -3,562 +3,660 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AmiConnect - Automatize seu atendimento no WhatsApp com Inteligência Artificial">
-    <title>AmiConnect | Atendimento Inteligente no WhatsApp</title>
+    <meta name="description" content="AmiConnect - Bot de IA no WhatsApp que atende pedidos do seu restaurante automaticamente 24h. Sem fidelidade, implantação em 24h, suporte próximo e pessoal.">
+    <title>AmiConnect | Bot de IA para Restaurantes e Delivery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        /* Cores do logo real */
         :root {
-            --primary-blue: #0B3D5C;
-            --primary-green: #66B574;
-            --accent-orange: #E89955;
-            --light-bg: #F5F5F5;
+            --blue: #1e3a5f;
+            --green: #5cb85c;
         }
-        
-        /* Animação de rede no hero */
-        .network-bg {
-            background: linear-gradient(135deg, #0B3D5C 0%, #1a5a7d 100%);
-            position: relative;
-            overflow: hidden;
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .bg-blue { background-color: #1e3a5f; }
+        .bg-green { background-color: #5cb85c; }
+        .text-blue { color: #1e3a5f; }
+        .text-green { color: #5cb85c; }
+        .border-blue { border-color: #1e3a5f; }
+        .border-green { border-color: #5cb85c; }
+
+        .btn-primary {
+            background-color: #5cb85c;
+            color: #fff;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
         }
-        
-        .network-bg::before {
-            content: '';
+        .btn-primary:hover {
+            background-color: #4cae4c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(92,184,92,0.35);
+        }
+        .btn-outline {
+            border: 2px solid #fff;
+            color: #fff;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.12); }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #1e3a5f 0%, #163050 60%, #1a4a2e 100%);
+        }
+
+        .hero-wave {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                radial-gradient(circle at 60% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 100px 100px;
-            animation: float 20s ease-in-out infinite;
+            bottom: 0; left: 0; right: 0;
         }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
+
+        .step-number {
+            width: 52px; height: 52px;
+            background: #1e3a5f;
+            color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; font-weight: 800;
+            flex-shrink: 0;
         }
-        
-        .fade-in {
-            animation: fadeIn 1s ease-in;
+
+        .plan-card {
+            border-radius: 18px;
+            transition: transform 0.25s, box-shadow 0.25s;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .plan-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(30,58,95,0.16);
         }
-        
-        .card-hover {
-            transition: all 0.3s ease;
+        .plan-badge {
+            background: #5cb85c;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 99px;
+            display: inline-block;
         }
-        
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        .plan-feature { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+        .plan-feature i { color: #5cb85c; margin-top: 3px; flex-shrink: 0; }
+        .plan-feature.no i { color: #ccc; }
+        .plan-feature.no span { color: #aaa; }
+
+        .benefit-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, #1e3a5f, #5cb85c);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #0B3D5C 0%, #66B574 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            width: 62px; height: 62px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+            z-index: 999;
+            transition: transform 0.2s;
+            animation: wapulse 2.5s infinite;
         }
-        
-        .network-line {
-            position: absolute;
-            background: linear-gradient(90deg, transparent, #66B574, transparent);
-            height: 2px;
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        @keyframes wapulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 4px 32px rgba(37,211,102,0.8); }
+        }
+
+        /* Mobile menu */
+        #mobile-menu { display: none; }
+        #mobile-menu.open { display: block; }
+
+        .nav-link {
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+        .nav-link:hover { color: #1e3a5f; }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(92,184,92,0.12);
+            color: #5cb85c;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 99px;
+            margin-bottom: 14px;
+        }
+
+        .connector-line {
+            width: 2px;
+            background: linear-gradient(to bottom, #1e3a5f, #5cb85c);
+            flex-grow: 1;
+            min-height: 40px;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    
-    <!-- Header -->
-    <header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-900 to-green-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-wifi text-white text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold"><span class="text-[#0B3D5C]">Ami</span><span class="text-[#66B574]">Connect</span></span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#beneficios" class="text-gray-700 hover:text-blue-600 transition">Benefícios</a>
-                    <a href="#como-funciona" class="text-gray-700 hover:text-blue-600 transition">Como Funciona</a>
-                    <a href="#precos" class="text-gray-700 hover:text-blue-600 transition">Preços</a>
-                    <a href="#contato" class="bg-gradient-to-r from-[#0B3D5C] to-[#66B574] text-white px-6 py-2 rounded-lg hover:shadow-lg transition">
-                        Começar Agora
-                    </a>
-                </div>
-                <button class="md:hidden text-gray-700">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="network-bg pt-32 pb-20 relative">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center text-white fade-in">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                    Transforme seu WhatsApp em uma <span class="text-yellow-300">Máquina de Vendas</span>
-                </h1>
-                <p class="text-xl md:text-2xl mb-8 text-blue-100">
-                    Atendimento automático 24/7 com Inteligência Artificial. <br/>
-                    Nunca mais perca um cliente por falta de atendimento.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#contato" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition shadow-xl">
-                        <i class="fas fa-rocket mr-2"></i>
-                        Começar Gratuitamente
-                    </a>
-                    <a href="#como-funciona" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white/10 transition">
-                        <i class="fas fa-play-circle mr-2"></i>
-                        Ver Como Funciona
-                    </a>
-                </div>
-                <div class="mt-12 flex items-center justify-center space-x-8 text-sm">
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-300"></i>
-                        <span>Sem contratos</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-300"></i>
-                        <span>Suporte dedicado</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-check-circle text-green-300"></i>
-                        <span>Integração em 24h</span>
-                    </div>
-                </div>
+<!-- ===================== HEADER ===================== -->
+<header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
+    <nav class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+        <a href="#inicio">
+            <img src="https://res.cloudinary.com/dtdiihw05/image/upload/v1773078876/WhatsApp_Image_2026-02-20_at_10.04.19_hhfytc.jpg"
+                 alt="AmiConnect Logo"
+                 class="h-12 w-auto object-contain">
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#inicio" class="nav-link">Início</a>
+            <a href="#como-funciona" class="nav-link">Como Funciona</a>
+            <a href="#planos" class="nav-link">Planos</a>
+            <a href="#contato" class="nav-link">Contato</a>
+            <a href="https://wa.me/5541995605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect"
+               target="_blank"
+               class="btn-primary" style="padding:10px 22px; font-size:0.92rem;">
+                <i class="fab fa-whatsapp"></i> Falar Agora
+            </a>
+        </div>
+
+        <!-- Hamburger -->
+        <button id="menu-toggle" class="md:hidden text-gray-700 text-2xl" aria-label="Abrir menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 px-5 py-4 flex flex-col gap-4">
+        <a href="#inicio" class="nav-link py-1" onclick="closeMobileMenu()">Início</a>
+        <a href="#como-funciona" class="nav-link py-1" onclick="closeMobileMenu()">Como Funciona</a>
+        <a href="#planos" class="nav-link py-1" onclick="closeMobileMenu()">Planos</a>
+        <a href="#contato" class="nav-link py-1" onclick="closeMobileMenu()">Contato</a>
+        <a href="https://wa.me/5541995605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect"
+           target="_blank"
+           class="btn-primary justify-center text-sm" onclick="closeMobileMenu()">
+            <i class="fab fa-whatsapp"></i> Falar Agora
+        </a>
+    </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section id="inicio" class="hero-bg pt-28 pb-32 relative overflow-hidden">
+    <!-- Decorative circles -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-green-500/10 rounded-full -mr-32 -mt-32 pointer-events-none"></div>
+    <div class="absolute bottom-20 left-0 w-72 h-72 bg-blue-300/10 rounded-full -ml-24 pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-5 text-center text-white relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-medium mb-8">
+            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            Bot de IA disponível agora — seu restaurante nunca mais perde pedido
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+            Seu restaurante atende <br>
+            <span style="color:#5cb85c;">pedidos automaticamente</span><br>
+            no WhatsApp — 24h por dia
+        </h1>
+
+        <p class="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+            A AmiConnect instala um bot de Inteligência Artificial no seu WhatsApp que recebe pedidos, tira dúvidas e fecha vendas enquanto você descansa — sem precisar de atendente.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/5541995605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect"
+               target="_blank"
+               class="btn-primary text-lg" style="padding:16px 36px;">
+                <i class="fab fa-whatsapp text-xl"></i>
+                Quero Testar Grátis
+            </a>
+            <a href="#como-funciona" class="btn-outline text-lg" style="padding:16px 36px;">
+                <i class="fas fa-play-circle"></i>
+                Ver como funciona
+            </a>
+        </div>
+
+        <div class="mt-12 flex flex-wrap justify-center gap-6 text-sm text-blue-100">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-400"></i>
+                Sem fidelidade — cancele quando quiser
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-400"></i>
+                Implantação em até 24h
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-400"></i>
+                Suporte próximo e pessoal
             </div>
         </div>
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#F9FAFB"/>
-            </svg>
-        </div>
-    </section>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="fade-in">
-                    <div class="text-4xl font-bold gradient-text mb-2">24/7</div>
-                    <div class="text-gray-600">Atendimento</div>
+    <!-- Wave -->
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block">
+            <path d="M0 40 C240 80 480 0 720 40 C960 80 1200 0 1440 40 L1440 80 L0 80 Z" fill="#F9FAFB"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section id="como-funciona" class="py-24 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-5">
+        <div class="text-center mb-16">
+            <span class="section-label">Simples assim</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900">Como Funciona</h2>
+            <p class="text-gray-500 mt-4 text-lg">3 passos para o seu delivery atender 24h sem você precisar estar online</p>
+        </div>
+
+        <div class="flex flex-col gap-0 max-w-2xl mx-auto">
+            <!-- Step 1 -->
+            <div class="flex gap-6 items-start">
+                <div class="flex flex-col items-center">
+                    <div class="step-number">1</div>
+                    <div class="connector-line my-2"></div>
                 </div>
-                <div class="fade-in">
-                    <div class="text-4xl font-bold gradient-text mb-2">+300%</div>
-                    <div class="text-gray-600">Mais Vendas</div>
-                </div>
-                <div class="fade-in">
-                    <div class="text-4xl font-bold gradient-text mb-2">-70%</div>
-                    <div class="text-gray-600">Custos</div>
-                </div>
-                <div class="fade-in">
-                    <div class="text-4xl font-bold gradient-text mb-2">0</div>
-                    <div class="text-gray-600">Clientes Perdidos</div>
+                <div class="pb-10">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Nos conta sobre o seu negócio</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Você manda seu cardápio, preços, horários e informações do delivery. Nossa equipe configura tudo — você não precisa mexer em nada técnico.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Benefícios -->
-    <section id="beneficios" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Por que escolher a <span class="gradient-text">AmiConnect?</span>
-                </h2>
-                <p class="text-xl text-gray-600">
-                    Conecte seu negócio a uma rede inteligente de atendimento
-                </p>
+            <!-- Step 2 -->
+            <div class="flex gap-6 items-start">
+                <div class="flex flex-col items-center">
+                    <div class="step-number" style="background:#5cb85c;">2</div>
+                    <div class="connector-line my-2"></div>
+                </div>
+                <div class="pb-10">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">A gente instala o bot no seu WhatsApp</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Em até 24 horas o bot de IA já está funcionando no seu número, pronto para receber pedidos, responder dúvidas e enviar cardápio automaticamente.
+                    </p>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#0B3D5C] to-[#66B574] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-robot text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Inteligência Artificial</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Bot treinado especificamente para seu negócio. Responde dúvidas, envia cardápio e fecha vendas automaticamente.
-                    </p>
+            <!-- Step 3 -->
+            <div class="flex gap-6 items-start">
+                <div class="flex flex-col items-center">
+                    <div class="step-number">3</div>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#66B574] to-[#E89955] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-clock text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Atendimento 24/7</h3>
+                <div class="pb-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Seu restaurante vende 24h — você descansa</h3>
                     <p class="text-gray-600 leading-relaxed">
-                        Seu negócio nunca para. Atenda clientes de madrugada, feriados e finais de semana sem precisar estar online.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#E89955] to-[#0B3D5C] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-chart-line text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Aumente suas Vendas</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Resposta instantânea = mais conversões. Clientes não esperam e já fecham o pedido na hora.
-                    </p>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#0B3D5C] to-[#E89955] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-wallet text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Reduza Custos</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Elimine a necessidade de contratar atendentes. O bot resolve 90% dos atendimentos sozinho.
-                    </p>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#66B574] to-[#0B3D5C] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-chart-pie text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Painel de Gestão</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Veja todos os pedidos, conversas e métricas em tempo real. Assuma o atendimento quando quiser.
-                    </p>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#E89955] to-[#66B574] rounded-xl flex items-center justify-center mb-6">
-                        <i class="fas fa-headset text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Suporte Dedicado</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Nossa equipe está sempre disponível pra te ajudar. Onboarding completo e treinamento inclusos.
+                        Pedidos chegam e são processados automaticamente. No plano Profissional você ainda recebe relatórios e templates para disparos de marketing no WhatsApp.
                     </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Como Funciona -->
-    <section id="como-funciona" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Como <span class="gradient-text">Funciona?</span>
-                </h2>
-                <p class="text-xl text-gray-600">
-                    Simples, rápido e sem complicação
-                </p>
+<!-- ===================== PLANOS ===================== -->
+<section id="planos" class="py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+        <div class="text-center mb-16">
+            <span class="section-label">Preços transparentes</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900">Escolha seu Plano</h2>
+            <p class="text-gray-500 mt-4 text-lg">3 meses de preço promocional para você ver resultado antes de pagar o preço cheio</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+
+            <!-- Plano Básico -->
+            <div class="plan-card bg-white border-2 border-gray-200 p-8 shadow-md">
+                <div class="mb-6">
+                    <p class="text-gray-500 text-sm font-medium uppercase tracking-wide mb-2">Básico</p>
+                    <div class="flex items-end gap-2 mb-1">
+                        <span class="text-4xl font-extrabold text-gray-900">R$97</span>
+                        <span class="text-gray-500 mb-1">/mês</span>
+                    </div>
+                    <p class="text-sm text-green-600 font-semibold">Nos 3 primeiros meses — depois R$189/mês</p>
+                    <p class="text-sm text-gray-400 mt-1">+ Setup único de R$199</p>
+                </div>
+
+                <hr class="mb-6 border-gray-100">
+
+                <div class="mb-8">
+                    <div class="plan-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Bot de IA atendendo pedidos no WhatsApp 24h</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Até 30 itens no cardápio</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Impressão manual de pedidos</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Suporte próximo e pessoal</span>
+                    </div>
+                    <div class="plan-feature no">
+                        <i class="fas fa-times"></i>
+                        <span>Fotos dos itens no cardápio</span>
+                    </div>
+                    <div class="plan-feature no">
+                        <i class="fas fa-times"></i>
+                        <span>Relatórios de vendas</span>
+                    </div>
+                    <div class="plan-feature no">
+                        <i class="fas fa-times"></i>
+                        <span>Impressão automática de pedidos</span>
+                    </div>
+                    <div class="plan-feature no">
+                        <i class="fas fa-times"></i>
+                        <span>Templates de marketing no WhatsApp</span>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/5541995605496?text=Olá!%20Tenho%20interesse%20no%20Plano%20Básico%20da%20AmiConnect"
+                   target="_blank"
+                   class="block text-center border-2 font-bold py-3 px-6 rounded-xl transition hover:bg-gray-50"
+                   style="border-color:#1e3a5f; color:#1e3a5f;">
+                    Quero o Plano Básico
+                </a>
             </div>
 
-            <div class="max-w-5xl mx-auto">
-                <div class="relative">
-                    <!-- Linha conectora -->
-                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#0B3D5C] to-[#66B574] transform -translate-x-1/2"></div>
+            <!-- Plano Profissional -->
+            <div class="plan-card p-8 shadow-xl relative" style="background:#1e3a5f; color:#fff;">
+                <div class="absolute top-5 right-5">
+                    <span class="plan-badge">Mais popular</span>
+                </div>
 
-                    <!-- Step 1 -->
-                    <div class="relative flex flex-col md:flex-row items-center mb-16">
-                        <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-                            <div class="inline-block bg-gradient-to-r from-[#0B3D5C] to-[#66B574] text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                                Passo 1
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">Conecte seu WhatsApp</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Integramos seu número do WhatsApp Business em menos de 24 horas. Processo 100% guiado por nossa equipe.
-                            </p>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#0B3D5C] to-[#66B574] rounded-full flex items-center justify-center z-10 shadow-lg">
-                            <i class="fas fa-plug text-white text-2xl"></i>
-                        </div>
-                        <div class="flex-1 md:pl-12"></div>
+                <div class="mb-6">
+                    <p class="text-blue-200 text-sm font-medium uppercase tracking-wide mb-2">Profissional</p>
+                    <div class="flex items-end gap-2 mb-1">
+                        <span class="text-4xl font-extrabold">R$147</span>
+                        <span class="text-blue-200 mb-1">/mês</span>
                     </div>
+                    <p class="text-sm font-semibold" style="color:#5cb85c;">Nos 3 primeiros meses — depois R$289/mês</p>
+                    <p class="text-sm text-blue-300 mt-1">+ Setup único de R$249</p>
+                </div>
 
-                    <!-- Step 2 -->
-                    <div class="relative flex flex-col md:flex-row items-center mb-16">
-                        <div class="flex-1 md:pr-12"></div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#66B574] to-[#E89955] rounded-full flex items-center justify-center z-10 shadow-lg">
-                            <i class="fas fa-magic text-white text-2xl"></i>
-                        </div>
-                        <div class="flex-1 md:pl-12 mt-8 md:mt-0">
-                            <div class="inline-block bg-gradient-to-r from-[#66B574] to-[#E89955] text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                                Passo 2
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">Treinamos a IA</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Cadastramos seu cardápio, preços e informações. A IA aprende sobre seu negócio e está pronta pra atender.
-                            </p>
-                        </div>
-                    </div>
+                <hr class="mb-6 border-blue-700">
 
-                    <!-- Step 3 -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="flex-1 md:text-right md:pr-12 mb-8 md:mb-0">
-                            <div class="inline-block bg-gradient-to-r from-[#E89955] to-[#0B3D5C] text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                                Passo 3
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">Comece a Vender!</h3>
-                            <p class="text-gray-600 leading-relaxed">
-                                Pronto! Seu bot já está atendendo clientes 24/7. Acompanhe tudo pelo painel e assuma conversas quando quiser.
-                            </p>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-[#E89955] to-[#0B3D5C] rounded-full flex items-center justify-center z-10 shadow-lg">
-                            <i class="fas fa-rocket text-white text-2xl"></i>
-                        </div>
-                        <div class="flex-1 md:pl-12"></div>
+                <div class="mb-8">
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Bot de IA atendendo pedidos no WhatsApp 24h</span>
                     </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Itens ilimitados no cardápio</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Fotos dos itens no cardápio</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Relatórios de vendas com senha</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Impressão automática de pedidos</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Templates de marketing no WhatsApp</span>
+                    </div>
+                    <div class="plan-feature">
+                        <i class="fas fa-check" style="color:#5cb85c;"></i>
+                        <span>Suporte próximo e pessoal</span>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/5541995605496?text=Olá!%20Tenho%20interesse%20no%20Plano%20Profissional%20da%20AmiConnect"
+                   target="_blank"
+                   class="btn-primary justify-center text-center w-full" style="font-size:1rem; padding:14px 24px;">
+                    <i class="fab fa-whatsapp"></i>
+                    Quero o Plano Profissional
+                </a>
+            </div>
+        </div>
+
+        <p class="text-center text-gray-400 text-sm mt-8">
+            <i class="fas fa-shield-alt mr-1"></i>
+            Sem fidelidade. Cancele a qualquer momento sem multa.
+        </p>
+    </div>
+</section>
+
+<!-- ===================== BENEFÍCIOS ===================== -->
+<section id="beneficios" class="py-24 bg-gray-50">
+    <div class="max-w-5xl mx-auto px-5">
+        <div class="text-center mb-16">
+            <span class="section-label">Por que a AmiConnect</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900">Diferente das grandes empresas</h2>
+            <p class="text-gray-500 mt-4 text-lg">Feita para restaurantes e deliveries pequenos e médios — não para corporações</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Benefício 1 -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm flex gap-5 items-start">
+                <div class="benefit-icon">
+                    <i class="fas fa-robot text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Bot de IA que não dorme</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Seu WhatsApp recebe e processa pedidos 24 horas por dia, 7 dias por semana — inclusive de madrugada, feriados e finais de semana. Zero pedido perdido.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Benefício 2 -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm flex gap-5 items-start">
+                <div class="benefit-icon">
+                    <i class="fas fa-handshake text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Suporte próximo e pessoal</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Você fala diretamente com a equipe que cuida do seu bot — não com um call center. A gente conhece o seu negócio pelo nome.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Benefício 3 -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm flex gap-5 items-start">
+                <div class="benefit-icon">
+                    <i class="fas fa-bolt text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Implantação em até 24h</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Sem esperar semanas. Em um dia útil o seu bot já está no ar, recebendo pedidos e atendendo seus clientes.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Benefício 4 -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm flex gap-5 items-start">
+                <div class="benefit-icon">
+                    <i class="fas fa-lock-open text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Sem fidelidade — você decide</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Sem contrato de 12 ou 24 meses. Se não gostar, cancele quando quiser sem pagar multa. Nosso compromisso é te fazer ficar pelo resultado.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Preços -->
-    <section id="precos" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Plano <span class="gradient-text">Transparente</span>
-                </h2>
-                <p class="text-xl text-gray-600">
-                    Invista menos, venda mais
+<!-- ===================== CONTATO / CTA ===================== -->
+<section id="contato" class="py-24 relative overflow-hidden" style="background:#1e3a5f;">
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-green-500/10 rounded-full -mr-24 -mt-24"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-300/5 rounded-full -ml-32 -mb-32"></div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-5 text-center relative z-10">
+        <span class="section-label" style="background:rgba(92,184,92,0.15); color:#5cb85c;">Fale com a gente</span>
+        <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-6">
+            Pronto para vender mais <br>sem trabalhar mais?
+        </h2>
+        <p class="text-blue-200 text-lg mb-10 leading-relaxed">
+            Manda uma mensagem agora e um especialista explica como o bot funciona para o seu restaurante — sem compromisso.
+        </p>
+
+        <a href="https://wa.me/5541995605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect%20para%20meu%20restaurante"
+           target="_blank"
+           class="btn-primary text-lg mx-auto" style="padding:18px 44px; font-size:1.1rem; justify-content:center; display:inline-flex;">
+            <i class="fab fa-whatsapp text-2xl"></i>
+            Falar pelo WhatsApp agora
+        </a>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-6 text-sm text-blue-200">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-clock text-green-400"></i>
+                Resposta rápida
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-check-circle text-green-400"></i>
+                Sem compromisso
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fas fa-user-check text-green-400"></i>
+                Fala com uma pessoa real
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="max-w-5xl mx-auto px-5">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+            <div class="max-w-xs">
+                <img src="https://res.cloudinary.com/dtdiihw05/image/upload/v1773078876/WhatsApp_Image_2026-02-20_at_10.04.19_hhfytc.jpg"
+                     alt="AmiConnect"
+                     class="h-10 w-auto object-contain mb-4 brightness-0 invert opacity-80">
+                <p class="text-sm leading-relaxed">
+                    Bot de IA no WhatsApp para restaurantes e deliveries. Atendimento automático 24h, suporte próximo e sem fidelidade.
                 </p>
             </div>
 
-            <div class="max-w-lg mx-auto">
-                <!-- Plano Mensal -->
-                <div class="bg-gradient-to-br from-[#0B3D5C] to-[#66B574] p-8 rounded-2xl shadow-2xl text-white relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
-                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
-                    <div class="relative z-10">
-                        <div class="text-center mb-6">
-                            <div class="inline-block bg-white/20 text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">
-                                ⭐ Plano Único
-                            </div>
-                            <h3 class="text-3xl font-bold mb-2">Assinatura Mensal</h3>
-                            <div class="text-5xl font-bold mb-2">
-                                R$ 249
-                            </div>
-                            <p class="text-blue-100">por mês, sem contrato*</p>
-                        </div>
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Atendimento ilimitado 24/7 com IA</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Bot treinado para seu negócio</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Painel de gestão completo</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Relatórios e métricas em tempo real</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Cadastro de cardápio e produtos</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Integração WhatsApp Business API</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Suporte prioritário via WhatsApp</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Atualizações e melhorias incluídas</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-[#E89955] mt-1 mr-3 text-xl"></i>
-                                <span>Cancelamento a qualquer momento</span>
-                            </li>
-                        </ul>
-                        <a href="#contato" class="block w-full bg-white text-[#0B3D5C] text-center px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
-                            <i class="fas fa-rocket mr-2"></i>
-                            Começar Agora
-                        </a>
-                    </div>
+            <div class="flex flex-wrap gap-12">
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Menu</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#inicio" class="hover:text-white transition">Início</a></li>
+                        <li><a href="#como-funciona" class="hover:text-white transition">Como Funciona</a></li>
+                        <li><a href="#planos" class="hover:text-white transition">Planos</a></li>
+                        <li><a href="#contato" class="hover:text-white transition">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy.html" class="hover:text-white transition">Política de Privacidade</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wide">Contato</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <a href="https://wa.me/5541995605496" target="_blank" class="hover:text-white transition flex items-center gap-2">
+                                <i class="fab fa-whatsapp text-green-400"></i>
+                                (41) 99560-5496
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="text-center mt-8">
-                <p class="text-gray-600 text-sm">
-                    * Mais instalação e configuração do servidor (valor sob consulta)
-                </p>
-                <p class="text-gray-500 text-sm mt-2">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Custos adicionais: apenas as conversas pelo WhatsApp Business API (99% grátis na janela de 24h)
-                </p>
-            </div>
         </div>
-    </section>
 
-    <!-- CTA Final -->
-    <section id="contato" class="py-20 bg-gradient-to-br from-[#0B3D5C] to-[#66B574] text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -ml-48 -mt-48"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full -mr-48 -mb-48"></div>
-        </div>
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">
-                Pronto para Revolucionar seu Atendimento?
-            </h2>
-            <p class="text-xl md:text-2xl mb-12 text-blue-100">
-                Junte-se a dezenas de empresas que já aumentaram suas vendas com a AmiConnect
+        <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-500">
+                &copy; 2026 AmiConnect. Todos os direitos reservados.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://wa.me/554195605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect" 
-                   class="bg-white text-blue-600 px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-2xl inline-flex items-center justify-center">
-                    <i class="fab fa-whatsapp text-2xl mr-3"></i>
-                    Falar com Especialista
-                </a>
-                <a href="/cdn-cgi/l/email-protection#c8aba7a6bca9bca788a9a5a1aba7a6a6adabbce6aba7a5e6aaba" class="border-2 border-white text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-white/10 transition inline-flex items-center justify-center">
-                    <i class="fas fa-envelope mr-3"></i>
-                    Enviar E-mail
-                </a>
-            </div>
-            <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-8 text-sm">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-shield-alt text-green-300"></i>
-                    <span>Dados 100% seguros</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-clock text-green-300"></i>
-                    <span>Implantação em 24h</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-star text-yellow-300"></i>
-                    <span>Satisfação garantida</span>
-                </div>
-            </div>
+            <p class="text-xs text-gray-600">
+                Feito com cuidado para donos de restaurantes brasileiros
+            </p>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-[#0B3D5C] to-[#66B574] rounded-lg flex items-center justify-center">
-                            <i class="fas fa-wifi text-white"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">AmiConnect</span>
-                    </div>
-                    <p class="text-sm text-gray-400">
-                        Conectando negócios através da inteligência artificial.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Empresa</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-white transition">Sobre Nós</a></li>
-                        <li><a href="#" class="hover:text-white transition">Como Funciona</a></li>
-                        <li><a href="#" class="hover:text-white transition">Casos de Sucesso</a></li>
-                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Suporte</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-white transition">Central de Ajuda</a></li>
-                        <li><a href="#" class="hover:text-white transition">Documentação</a></li>
-                        <li><a href="#" class="hover:text-white transition">Status do Sistema</a></li>
-                        <li><a href="#" class="hover:text-white transition">Contato</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Legal</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="/terms" class="hover:text-white transition">Termos de Uso</a></li>
-                        <li><a href="/privacy" class="hover:text-white transition">Política de Privacidade</a></li>
-                        <li><a href="/privacy#lgpd" class="hover:text-white transition">LGPD</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm text-gray-400 mb-4 md:mb-0">
-                    © 2026 AmiConnect. Todos os direitos reservados.
-                </p>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-facebook text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-linkedin text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-youtube text-xl"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+<!-- ===================== WHATSAPP FLOAT ===================== -->
+<a href="https://wa.me/5541995605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect"
+   target="_blank"
+   class="whatsapp-float"
+   aria-label="Falar pelo WhatsApp">
+    <i class="fab fa-whatsapp text-white text-3xl"></i>
+</a>
 
-    <!-- Botão WhatsApp Flutuante -->
-    <a href="https://wa.me/554195605496?text=Olá!%20Quero%20conhecer%20a%20AmiConnect" 
-       class="fixed bottom-6 right-6 bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition z-50 pulse">
-        <i class="fab fa-whatsapp text-3xl"></i>
-    </a>
+<script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    toggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        toggle.querySelector('i').classList.toggle('fa-bars');
+        toggle.querySelector('i').classList.toggle('fa-times');
+    });
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        toggle.querySelector('i').classList.add('fa-bars');
+        toggle.querySelector('i').classList.remove('fa-times');
+    }
 
-    <style>
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-    </style>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+    // Smooth scroll for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+                const offset = 80;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
         });
+    });
 
-        // Fade in on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        },
+    // Fade-in on scroll
+    const fadeEls = document.querySelectorAll('.plan-card, .bg-white.rounded-2xl');
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        io.observe(el);
+    });
+</script>
+</body>
+</html>
